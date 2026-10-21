@@ -77,7 +77,7 @@ git diff
 今回の作業に含めるファイルだけを指定します。以下は`git.md`を更新した場合の例です。
 
 ```powershell
-git add -- git.md
+git add -- docs/git.md
 git diff --cached
 git diff --cached --check
 ```

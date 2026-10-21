@@ -39,11 +39,12 @@ body { margin: 0; }
 h1 { font-size: clamp(25px, 6.9vw, 44px); line-height: 1.38; font-weight: 950; letter-spacing: -.045em; margin: 0; }
 .hero-description { font-size: clamp(15px, 3.7vw, 22px); line-height: 1.6; letter-spacing: .025em; margin: 16px 0 22px; }
 .start-button { min-height: 62px; border: 0; border-radius: 999px; background: var(--color-coral); color: white; font: inherit; font-weight: 800; font-size: clamp(23px, 5.4vw, 32px); padding: 15px 40px; opacity: 1; cursor: default; }
+.availability-note { margin: 8px 0 0; font-size: 14px; }
 .button-chevron { position: absolute; right: 8%; width: 13px; height: 13px; border-top: 3px solid white; border-right: 3px solid white; transform: rotate(45deg); }
 .steps-section { margin-top: 22px; }
 .steps { gap: 18px; list-style: none; padding: 0; margin: 0; }
 .step-card { border-radius: 26px; padding: 23px 3px 13px; background: #fffdf8d9; }
-.step-number { position: absolute; top: 3px; left: 5px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: white; font-size: 21px; font-weight: 800; z-index: 2; }
+.step-number { position: absolute; top: 3px; left: 5px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: var(--color-ink); font-size: 21px; font-weight: 800; z-index: 2; }
 .step-number-1 { background: var(--color-coral); }
 .step-number-2 { background: var(--color-mint); }
 .step-number-3 { background: var(--color-purple); }
@@ -51,7 +52,7 @@ h1 { font-size: clamp(25px, 6.9vw, 44px); line-height: 1.38; font-weight: 950; l
 .step-card p { font-size: clamp(11px, 2.9vw, 18px); line-height: 1.5; font-weight: 800; letter-spacing: -.04em; margin: 0; }
 .step-card:not(:last-child)::after { content: ""; position: absolute; right: -13px; top: 47%; width: 8px; height: 8px; border-top: 3px solid #bcb6aa; border-right: 3px solid #bcb6aa; transform: rotate(45deg); }
 .footer { min-height: 125px; margin: 12px -24px 0; padding: 60px 0 42px; }
-.footer p { position: relative; z-index: 2; color: #939187; font-size: clamp(10px, 2.3vw, 13px); margin: 0; }
+.footer p { position: relative; z-index: 2; color: #59584f; font-size: clamp(10px, 2.3vw, 13px); margin: 0; }
 .footer-friend { position: absolute; bottom: -30px; width: 30%; height: auto; }
 .footer-friend-blue { left: -3%; transform: rotate(8deg); }
 .footer-friend-mint { right: -5%; transform: rotate(-14deg); }

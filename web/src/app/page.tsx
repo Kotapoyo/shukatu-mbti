@@ -21,10 +21,10 @@ const steps = [
 export default function Home() {
   return (
     <main className="landing relative isolate mx-auto overflow-hidden">
-      <header className="brand flex items-center justify-center" aria-label="企業MBTI">
+      <header className="brand flex items-center justify-center">
         <span className="brand-rays" aria-hidden="true"><i /><i /><i /></span>
         <span className="brand-company">企業</span>
-        <span className="brand-letters" aria-hidden="true"><b>M</b><b>B</b><b>T</b><b>I</b></span>
+        <span className="brand-letters"><b>M</b><b>B</b><b>T</b><b>I</b></span>
         <span className="brand-rays brand-rays-right" aria-hidden="true"><i /><i /><i /></span>
       </header>
 
@@ -41,6 +41,7 @@ export default function Home() {
         <button className="start-button relative flex w-full items-center justify-center" type="button" disabled>
           診断を始める<span className="button-chevron" aria-hidden="true" />
         </button>
+        <p className="availability-note">診断機能は準備中です。</p>
       </section>
 
       <section className="steps-section" aria-label="企業選びの3ステップ">
