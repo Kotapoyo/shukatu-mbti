@@ -1,0 +1,51 @@
+.page {
+  min-height: 100svh;
+  padding: clamp(28px, 6svh, 48px) 24px calc(112px + env(safe-area-inset-bottom));
+  background: var(--color-cream);
+}
+
+.container {
+  width: min(100%, 672px);
+  margin-inline: auto;
+}
+
+.header { margin-bottom: 28px; }
+.eyebrow { margin: 0 0 8px; color: var(--color-blue); font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: .15em; }
+.header h1 { margin: 0; font-size: clamp(30px, 8vw, 42px); line-height: 1.3; }
+.description { margin: 8px 0 0; font-size: 14px; line-height: 1.7; }
+
+.emptyState {
+  display: flex;
+  min-height: 380px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 22px;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 10%, white);
+  border-radius: 28px;
+  background: #fffdf8;
+  text-align: center;
+}
+
+.illustration {
+  position: relative;
+  display: grid;
+  width: 132px;
+  height: 132px;
+  margin-bottom: 12px;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-mint) 20%, white);
+}
+
+.star { position: absolute; top: -12px; right: 0; color: var(--color-yellow); font-size: 36px; transform: rotate(15deg); }
+.emptyState h2 { margin: 0 0 8px; font-size: clamp(17px, 4.8vw, 23px); }
+.emptyState p { max-width: 340px; margin: 0; font-size: 14px; line-height: 1.7; }
+.emptyState .note { margin-top: 12px; color: #68665f; font-size: 12px; }
+
+@media (max-width: 359px) {
+  .page { padding-inline: 16px; }
+  .emptyState { min-height: 320px; padding-inline: 16px; }
+  .illustration { width: 100px; height: 100px; }
+  .illustration img { width: 84px; height: 84px; }
+}

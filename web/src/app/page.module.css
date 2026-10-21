@@ -1,0 +1,123 @@
+.home:global(.landing) {
+  display: flex;
+  flex-direction: column;
+  margin-inline: auto;
+  padding: clamp(16px, 3svh, 32px) 24px calc(112px + env(safe-area-inset-bottom));
+  min-height: 100svh;
+  overflow: visible;
+}
+
+.home :global(.brand) {
+  flex: none;
+  font-size: clamp(28px, 5svh, 44px);
+}
+
+.home :global(.hero) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home :global(.hero-art) {
+  width: min(55vw, 240px);
+  height: min(25svh, 220px);
+  margin: clamp(10px, 2svh, 18px) 0 6px;
+  aspect-ratio: auto;
+}
+
+.home :global(h1) {
+  font-size: clamp(23px, 3.8svh, 34px);
+  line-height: 1.25;
+}
+
+.home :global(.hero-description) {
+  margin: 8px 0 12px;
+  font-size: clamp(13px, 2svh, 17px);
+  line-height: 1.45;
+}
+
+.home :global(.start-button) {
+  min-height: clamp(48px, 7svh, 62px);
+  font-size: clamp(20px, 3svh, 26px);
+  padding-block: 8px;
+}
+
+.home :global(.availability-note) {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.home :global(.steps-section) {
+  margin-top: clamp(8px, 1.5svh, 16px);
+}
+
+.home :global(.steps) {
+  gap: 10px;
+}
+
+.home :global(.step-card) {
+  padding: 12px 4px 10px;
+  border-radius: 18px;
+}
+
+.home :global(.step-number) {
+  top: 2px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  font-size: 15px;
+}
+
+.home :global(.step-image) {
+  width: min(52%, 70px);
+  height: clamp(46px, 8svh, 70px);
+  aspect-ratio: auto;
+  margin-bottom: 2px;
+}
+
+.home :global(.step-card p) {
+  font-size: clamp(10px, 1.6svh, 14px);
+  line-height: 1.35;
+}
+
+.home :global(.step-card:not(:last-child)::after) {
+  right: -9px;
+}
+
+.home :global(.footer) {
+  min-height: 0;
+  margin: auto 0 0;
+  padding: 8px 0 0;
+}
+
+.home :global(.footer-friend),
+.home :global(.footer-dot),
+.home :global(.footer-flower) {
+  display: none;
+}
+
+.home :global(.footer p) {
+  font-size: 11px;
+}
+
+@media (max-height: 700px) {
+  .home:global(.landing) {
+    padding-top: 10px;
+    padding-bottom: calc(102px + env(safe-area-inset-bottom));
+  }
+
+  .home :global(.brand) { font-size: 28px; }
+  .home :global(.hero-art) { height: 19svh; margin-top: 6px; }
+  .home :global(h1) { font-size: 22px; }
+  .home :global(.hero-description) { margin: 5px 0 8px; font-size: 12px; }
+  .home :global(.start-button) { min-height: 46px; font-size: 20px; }
+  .home :global(.step-card) { padding: 7px 2px 5px; }
+  .home :global(.step-image) { height: 38px; }
+  .home :global(.footer) { padding-top: 4px; }
+}
+
+@media (max-width: 359px) {
+  .home:global(.landing) { padding-inline: 16px; }
+  .home :global(.steps) { gap: 7px; }
+  .home :global(.step-card:not(:last-child)::after) { right: -7px; }
+}
