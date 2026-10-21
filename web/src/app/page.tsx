@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import Image from "next/image";
+import BottomNavigation from "@/components/BottomNavigation";
+import styles from "./page.module.css";
+
+export const metadata: Metadata = {
+  icons: { icon: "/images/character-flower.svg" },
+};
 
 // 起動: npm run dev
 // 画像を public/images/ に置き、下のパスを変更すると差し替えできます。
@@ -20,7 +27,7 @@ const steps = [
 
 export default function Home() {
   return (
-    <main className="landing relative isolate mx-auto overflow-hidden">
+    <main className={`landing relative isolate mx-auto overflow-hidden ${styles.home}`}>
       <header className="brand flex items-center justify-center">
         <span className="brand-rays" aria-hidden="true"><i /><i /><i /></span>
         <span className="brand-company">企業</span>
@@ -64,6 +71,7 @@ export default function Home() {
         <p>性格診断は企業選びの参考です。</p>
         <Image className="footer-friend footer-friend-mint" src={homeAssets.friendMint} width={240} height={190} alt="" unoptimized />
       </footer>
+      <BottomNavigation active="home" recommendationsHref="/saved-companies" />
     </main>
   );
 }
