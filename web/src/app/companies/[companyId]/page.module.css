@@ -1,0 +1,87 @@
+.screen { width: 100%; max-width: 720px; min-height: 100svh; margin: 0 auto; padding: 30px 24px 0; background: var(--color-cream); }
+.header { position: relative; display: flex; align-items: center; gap: 70px; min-height: 62px; margin: 0 20px 30px; padding-right: 145px; }
+.brand { position: relative; color: var(--color-ink); text-decoration: none; font-size: clamp(24px, 4.6vw, 32px); font-weight: 950; line-height: 1.3; letter-spacing: -.04em; white-space: nowrap; }
+.brand::after { content: ""; position: absolute; height: 5px; left: 3px; right: 0; bottom: -8px; background: var(--color-mint); border-radius: 999px; transform: rotate(-3deg); }
+.pageLabel { margin: 0; font-size: 19px; font-weight: 800; white-space: nowrap; }
+.character { position: absolute; z-index: 1; width: 155px; right: -18px; top: -10px; pointer-events: none; }
+.character svg { display: block; width: 100%; overflow: visible; }
+.report { padding: 24px 22px 20px; background: white; border-radius: 26px; }
+.identity { display: grid; grid-template-columns: 165px minmax(0, 1fr); align-items: center; gap: 22px; margin-bottom: 20px; }
+.building svg { display: block; width: 100%; height: auto; }
+.identityText { min-width: 0; }
+.companyName { margin: 0; font-size: clamp(23px, 3.9vw, 33px); font-weight: 950; line-height: 1.45; letter-spacing: -.05em; overflow-wrap: anywhere; }
+.dummyNote { margin: 10px 0 0; color: color-mix(in srgb, var(--color-ink) 65%, white); font-size: 16px; line-height: 1.7; }
+.section { --section-color: var(--color-mint); margin-top: 24px; }
+.section[data-tone="purple"] { --section-color: var(--color-purple); }
+.sectionHeading { display: flex; align-items: center; gap: 10px; margin: 0 0 13px; font-size: clamp(19px, 3.1vw, 25px); font-weight: 800; line-height: 1.5; white-space: nowrap; letter-spacing: -.04em; }
+.sectionHeading::after { content: ""; height: 2px; background: var(--section-color); flex: 1; min-width: 10px; margin-left: 2px; }
+.number { display: grid; place-items: center; width: 43px; height: 35px; flex-shrink: 0; border-radius: 999px; color: white; background: var(--section-color); font-size: 21px; font-weight: 800; letter-spacing: 0; }
+.description { padding: 15px 20px; background: color-mix(in srgb, var(--color-ink) 4%, white); border-radius: 18px; font-size: clamp(15px, 2.5vw, 20px); line-height: 1.8; }
+.reasons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; padding: 0; margin: 0; list-style: none; }
+.reasons li { display: flex; align-items: center; gap: 15px; min-height: 80px; padding: 14px 20px; border-radius: 18px; background: color-mix(in srgb, var(--color-purple) 11%, white); font-size: 18px; font-weight: 800; line-height: 1.6; }
+.reasons svg { width: 43px; height: 43px; flex-shrink: 0; color: var(--color-purple); }
+.exampleNote { margin: 6px 2px 0; color: color-mix(in srgb, var(--color-ink) 68%, white); font-size: 12px; line-height: 1.7; }
+.infoPanel { padding: 8px 15px; margin: 0; background: color-mix(in srgb, var(--section-color) 10%, white); border-radius: 18px; }
+.infoRow { display: grid; grid-template-columns: 190px minmax(0, 1fr); align-items: center; gap: 17px; min-height: 54px; padding: 8px 0; }
+.infoRow + .infoRow { border-top: 1px solid color-mix(in srgb, var(--section-color) 20%, white); }
+.infoRow dt { display: flex; align-items: center; gap: 14px; font-size: 17px; font-weight: 800; }
+.infoRow svg { width: 31px; height: 31px; flex-shrink: 0; color: color-mix(in srgb, var(--section-color) 68%, var(--color-ink)); }
+.infoRow dd { margin: 0; padding-left: 20px; border-left: 1px solid color-mix(in srgb, var(--section-color) 30%, white); font-size: 16px; line-height: 1.7; overflow-wrap: anywhere; }
+.section[data-tone="purple"] .infoRow svg { color: color-mix(in srgb, var(--color-ink) 80%, var(--color-purple)); }
+.source { color: color-mix(in srgb, var(--color-ink) 75%, white); }
+.actions { padding: 0 10px; margin-top: 10px; }
+.application { margin: 0 2px 7px; font-size: 13px; line-height: 1.7; }
+.registerButton { display: flex; position: relative; justify-content: center; align-items: center; width: 100%; min-height: 58px; padding: 12px 42px; border: 0; border-radius: 999px; background: var(--color-coral); color: white; font: inherit; font-size: 23px; font-weight: 800; }
+.registerButton:disabled { opacity: 1; cursor: not-allowed; }
+.chevron { position: absolute; width: 11px; height: 11px; right: 30px; border-top: 3px solid currentColor; border-right: 3px solid currentColor; transform: rotate(45deg); }
+.preparing { margin: 5px 0 0; text-align: center; font-size: 11px; line-height: 1.7; color: color-mix(in srgb, var(--color-ink) 65%, var(--color-cream)); }
+.disclaimer { margin: 12px 0 8px; text-align: center; color: color-mix(in srgb, var(--color-ink) 65%, var(--color-cream)); font-size: 11px; line-height: 1.7; }
+.navigation { display: grid; grid-template-columns: repeat(2, 1fr); padding: 13px 0 20px; border-top: 1px solid color-mix(in srgb, var(--color-ink) 12%, var(--color-cream)); }
+.navigation a, .navigation button { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--color-ink); font: inherit; font-size: 13px; text-decoration: none; background: none; border: 0; padding: 0; }
+.navigation a { color: var(--color-coral); }
+.navigation svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.navigation a svg { fill: currentColor; }
+.navigation small { font-size: 10px; }
+.brand:focus-visible, .navigation a:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 5px; border-radius: 4px; }
+@media (max-width: 600px) {
+  .screen { padding: 24px 18px 0; }
+  .header { gap: 26px; padding-right: 106px; margin-inline: 12px; min-height: 50px; }
+  .pageLabel { font-size: 15px; }
+  .character { width: 120px; right: -16px; top: -5px; }
+  .report { padding: 18px 18px 20px; }
+  .identity { grid-template-columns: 115px minmax(0, 1fr); gap: 14px; }
+  .companyName { font-size: 24px; }
+  .dummyNote { font-size: 13px; }
+  .infoRow { grid-template-columns: 145px minmax(0, 1fr); gap: 10px; }
+  .infoRow dt, .infoRow dd { font-size: 14px; }
+  .infoRow dt { gap: 9px; }
+  .infoRow dd { padding-left: 12px; }
+  .reasons li { padding: 12px; gap: 10px; font-size: 15px; }
+  .reasons svg { width: 34px; height: 34px; }
+}
+@media (max-width: 420px) {
+  .screen { padding: 22px 12px 0; }
+  .header { margin: 0 10px 28px; gap: 18px; min-height: 50px; padding-right: 80px; }
+  .brand { font-size: 23px; }
+  .pageLabel { font-size: 13px; }
+  .character { width: 90px; right: -16px; top: 0; }
+  .report { padding: 16px 13px 18px; border-radius: 22px; }
+  .identity { grid-template-columns: 83px minmax(0, 1fr); gap: 10px; margin-bottom: 18px; }
+  .companyName { font-size: 20px; }
+  .dummyNote { font-size: 11px; margin-top: 5px; }
+  .section { margin-top: 21px; }
+  .sectionHeading { gap: 7px; font-size: 18px; }
+  .number { width: 33px; height: 29px; font-size: 17px; }
+  .description { font-size: 14px; padding: 12px 13px; border-radius: 14px; }
+  .reasons { gap: 8px; }
+  .reasons li { flex-direction: column; align-items: flex-start; gap: 8px; font-size: 14px; padding: 12px; border-radius: 14px; }
+  .reasons svg { width: 30px; height: 30px; }
+  .exampleNote { font-size: 10px; }
+  .infoPanel { padding: 5px 11px; border-radius: 14px; }
+  .infoRow { grid-template-columns: 105px minmax(0, 1fr); gap: 8px; }
+  .infoRow dt, .infoRow dd { font-size: 12px; }
+  .infoRow dt { gap: 7px; }
+  .infoRow svg { width: 24px; height: 24px; }
+  .infoRow dd { padding-left: 9px; }
+  .registerButton { min-height: 52px; font-size: 20px; }
+}
