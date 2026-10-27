@@ -26,9 +26,9 @@ export default function EmptyResults() {
       <div className={styles.emptyArt}><EmptyIllustration /></div>
       <div className={styles.emptyCard}>
         <p className={styles.emptyMessage}>希望条件を見直して、<br />もう一度探してみましょう</p>
-        <button className={styles.emptyPrimary} type="button" disabled aria-describedby="empty-profile-note">希望条件を見直す<span className={styles.chevron} aria-hidden="true" /></button>
+        <Link className={styles.emptyPrimary} href="/profile">希望条件を見直す<span className={styles.chevron} aria-hidden="true" /></Link>
         <Link className={styles.emptyHome} href="/">ホームへ戻る<span className={styles.chevron} aria-hidden="true" /></Link>
-        <p className={styles.connectionNote} id="empty-profile-note">希望条件の変更は、プロフィール画面の準備ができ次第ご利用いただけます。</p>
+        <p className={styles.connectionNote}>条件を保存した後、同じ診断回答で再判定できます。</p>
       </div>
     </section>
   );

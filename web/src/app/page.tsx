@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import BottomNavigation from "@/components/BottomNavigation";
+import AccountStatus from "./AccountStatus";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -34,6 +36,7 @@ export default function Home() {
         <span className="brand-letters"><b>M</b><b>B</b><b>T</b><b>I</b></span>
         <span className="brand-rays brand-rays-right" aria-hidden="true"><i /><i /><i /></span>
       </header>
+      <AccountStatus />
 
       <section className="hero text-center" aria-labelledby="hero-title">
         <div className="hero-art relative mx-auto">
@@ -45,10 +48,10 @@ export default function Home() {
         </div>
         <h1 id="hero-title">あなたに合う企業を、<br />見つけよう。</h1>
         <p className="hero-description">希望条件と働き方の相性から、<br />企業選びをもっと手軽に。</p>
-        <button className="start-button relative flex w-full items-center justify-center" type="button" disabled>
+        <Link className="start-button relative flex w-full items-center justify-center" href="/diagnosis">
           診断を始める<span className="button-chevron" aria-hidden="true" />
-        </button>
-        <p className="availability-note">診断機能は準備中です。</p>
+        </Link>
+        <p className="availability-note">架空の企業データで提案を試せます。</p>
       </section>
 
       <section className="steps-section" aria-label="企業選びの3ステップ">
@@ -71,7 +74,7 @@ export default function Home() {
         <p>性格診断は企業選びの参考です。</p>
         <Image className="footer-friend footer-friend-mint" src={homeAssets.friendMint} width={240} height={190} alt="" unoptimized />
       </footer>
-      <BottomNavigation active="home" recommendationsHref="/saved-companies" />
+      <BottomNavigation active="home" profileEnabled recommendationsHref="/saved-companies" />
     </main>
   );
 }

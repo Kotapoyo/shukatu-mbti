@@ -40,6 +40,8 @@
   min-height: clamp(48px, 7svh, 62px);
   font-size: clamp(20px, 3svh, 26px);
   padding-block: 8px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .home :global(.availability-note) {
@@ -120,4 +122,22 @@
   .home:global(.landing) { padding-inline: 16px; }
   .home :global(.steps) { gap: 7px; }
   .home :global(.step-card:not(:last-child)::after) { right: -7px; }
+}
+.accountLink, .accountStatus {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px auto 0;
+  color: var(--color-ink);
+  font-size: 14px;
+}
+
+.accountLink { text-decoration: underline; }
+.accountStatus button {
+  border: 0;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
 }

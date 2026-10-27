@@ -3,17 +3,45 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 import styles from "./page.module.css";
 import welcomeImage from "./welcome.png";
 import PasswordCharacter from "./PasswordCharacter";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [formError, setFormError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   function validateEmail(input: HTMLInputElement) {
     setEmailError(input.validity.valueMissing ? "メールアドレスを入力してください。" : input.validity.typeMismatch ? "メールアドレスの形式を確認してください（例：student@example.com）。" : "");
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFormError("");
+    setSubmitting(true);
+    const fields = new FormData(event.currentTarget);
+    try {
+      const { error } = await authClient.signIn.email({
+        email: String(fields.get("email")),
+        password: String(fields.get("password")),
+      });
+      if (error) {
+        setFormError(error.status === 401 ? "メールアドレスまたはパスワードが違います。" : "ログインできませんでした。接続と入力内容を確認してください。");
+        return;
+      }
+      router.push("/");
+      router.refresh();
+    } catch {
+      setFormError("サーバーに接続できませんでした。時間をおいて再試行してください。");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -38,13 +66,13 @@ export default function LoginPage() {
           <p className="hero-description">あなたに合う企業探しを、ここから。</p>
         </div>
 
-        {/* 認証APIの仕様確定後に接続する。入力内容の送信・保存は行わない。 */}
-        <form className={styles.form} onSubmit={(event) => event.preventDefault()} aria-describedby="login-note">
+        <form className={styles.form} method="post" onSubmit={handleSubmit} aria-describedby="login-note">
           <div className={styles.field}>
             <label className="font-bold" htmlFor="email">メールアドレス</label>
             <input
               className={styles.input}
               id="email"
+              name="email"
               type="email"
               autoComplete="username"
               inputMode="email"
@@ -66,6 +94,7 @@ export default function LoginPage() {
               <input
                 className={styles.input}
                 id="password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
@@ -85,10 +114,11 @@ export default function LoginPage() {
           </div>
 
           <div className="text-center">
-            <button className="start-button w-full" type="submit" disabled aria-describedby="login-note">
-              ログイン
+            <button className="start-button w-full" type="submit" disabled={submitting} aria-describedby="login-note">
+              {submitting ? "確認中…" : "ログイン"}
             </button>
-            <p id="login-note" className="availability-note">ログイン機能は準備中です。</p>
+            <p id="login-note" className="availability-note">開発用の架空アカウントでログインしてください。</p>
+            {formError && <p className={styles.feedback} role="alert">{formError}</p>}
           </div>
         </form>
 

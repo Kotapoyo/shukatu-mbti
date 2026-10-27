@@ -2,13 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { answerValues, questions, type Answer } from "./questions";
+import { ANSWERS_STORAGE_KEY } from "./recommendations";
 import styles from "./page.module.css";
 
 export default function DiagnosisPage() {
+  const router = useRouter();
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [review, setReview] = useState(false);
+  const [saveError, setSaveError] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const answeredCount = Object.keys(answers).length;
   const canContinue = questions.every((question) => answers[question.id] !== undefined);
@@ -19,6 +23,17 @@ export default function DiagnosisPage() {
       heading.current?.focus({ preventScroll: true });
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+  }
+
+  function showRecommendations() {
+    if (!canContinue) return;
+    try {
+      window.sessionStorage.setItem(ANSWERS_STORAGE_KEY, JSON.stringify(answers));
+    } catch {
+      setSaveError(true);
+      return;
+    }
+    router.push("/diagnosis/results");
   }
 
   return (
@@ -50,8 +65,12 @@ export default function DiagnosisPage() {
               </div>
             ))}
           </dl>
-          <p className={styles.notice}>企業の提案機能は準備中です。回答はこの画面内のみで保持され、再読み込みするとリセットされます。</p>
-          <button type="button" className={styles.back} onClick={() => moveTo(false)}>回答を見直す</button>
+          <p className={styles.notice}>架空企業と、このブラウザーで登録したデモ企業を使って相性を比べます。保存済みプロフィールがある場合は、希望勤務地と最低月給も判定します。</p>
+          {saveError && <p className={styles.notice} role="alert">回答を一時保存できませんでした。ブラウザーの設定を確認してから再度お試しください。</p>}
+          <div className={styles.actions}>
+            <button type="button" className={styles.back} onClick={() => moveTo(false)}>回答を見直す</button>
+            <button type="button" className={styles.next} onClick={showRecommendations}>企業を提案する<span aria-hidden="true">›</span></button>
+          </div>
         </section>
       ) : (
         <form onSubmit={(event) => { event.preventDefault(); if (canContinue) moveTo(true); }}>
@@ -60,7 +79,7 @@ export default function DiagnosisPage() {
               <fieldset key={question.id} className={styles.question}>
                 <legend className={styles.questionTitle}>Q{index + 1}. {question.title}</legend>
                 {question.id === "commute" && (
-                  <p className={styles.location}>プロフィールの希望勤務地：未設定<span>プロフィール連携後に表示されます。</span></p>
+                  <p className={styles.location}>通勤距離の希望は、現在の提案判定には使いません。</p>
                 )}
                 <div className={styles.scale}>
                   {answerValues.map((value) => (
@@ -86,7 +105,7 @@ export default function DiagnosisPage() {
 
       <nav className={styles.navigation} aria-label="学生メニュー">
         <Link href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z" /></svg>ホーム</Link>
-        <button type="button" disabled title="プロフィール画面は準備中です"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4" /><path d="M4 22v-2a8 8 0 0 1 16 0v2" /></svg>プロフィール<span className={styles.preparing}>準備中</span></button>
+        <Link href="/profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4" /><path d="M4 22v-2a8 8 0 0 1 16 0v2" /></svg>プロフィール</Link>
       </nav>
     </main>
   );

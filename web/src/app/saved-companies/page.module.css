@@ -42,6 +42,14 @@
 .emptyState h2 { margin: 0 0 8px; font-size: clamp(17px, 4.8vw, 23px); }
 .emptyState p { max-width: 340px; margin: 0; font-size: 14px; line-height: 1.7; }
 .emptyState .note { margin-top: 12px; color: #68665f; font-size: 12px; }
+.status { padding: 32px 22px; border-radius: 24px; background: #fffdf8; text-align: center; font-size: 15px; line-height: 1.7; }
+.status p { margin: 0 0 12px; }
+.status a { color: var(--color-ink); font-weight: 800; }
+.companyList { display: grid; gap: 14px; padding: 0; margin: 0; list-style: none; }
+.companyCard { display: flex; align-items: center; gap: 16px; padding: 22px; border: 1px solid color-mix(in srgb, var(--color-ink) 10%, white); border-radius: 24px; background: #fffdf8; }
+.companyMark { display: grid; width: 48px; height: 48px; flex-shrink: 0; place-items: center; border-radius: 50%; background: var(--color-mint); color: var(--color-ink); font-size: 24px; }
+.companyCard h2 { margin: 0; font-size: clamp(17px, 4vw, 22px); line-height: 1.5; }
+.companyCard p { margin: 4px 0 0; font-size: 13px; }
 
 @media (max-width: 359px) {
   .page { padding-inline: 16px; }

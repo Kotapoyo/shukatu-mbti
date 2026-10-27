@@ -29,10 +29,16 @@
 .companyArt svg { display: block; width: 100%; height: auto; }
 .companyContent { min-width: 0; }
 .companyName { margin: 6px 0 0; padding-bottom: 13px; border-bottom: 2px solid color-mix(in srgb, var(--company-color) 65%, var(--color-cream)); font-size: clamp(21px, 3.8vw, 33px); line-height: 1.5; font-weight: 950; letter-spacing: -.055em; overflow-wrap: anywhere; }
+.score { margin: 10px 0 0; font-size: 14px; line-height: 1.5; }
 .reasons { display: grid; gap: 10px; padding: 0; margin: 18px 0 20px; list-style: none; }
 .reasons li { display: flex; align-items: flex-start; gap: 10px; font-size: clamp(15px, 2.7vw, 21px); line-height: 1.65; letter-spacing: -.035em; }
 .check { display: grid; place-items: center; width: 29px; height: 29px; flex-shrink: 0; margin-top: 3px; border-radius: 50%; background: var(--company-color); }
 .check svg { width: 21px; height: 21px; fill: none; stroke: white; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.saveButton { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin-bottom: 10px; padding: 10px 16px; border: 2px solid var(--color-mint); border-radius: 999px; background: var(--color-cream); color: var(--color-ink); font: inherit; font-weight: 800; text-decoration: none; cursor: pointer; }
+.saveButton:disabled { opacity: .65; cursor: default; }
+.saveButton:focus-visible, .savedLink:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
+.saveError { margin: 0 0 10px; color: var(--color-ink); font-size: 14px; }
+.savedLink { display: inline-block; margin-bottom: 16px; color: var(--color-ink); font-weight: 800; text-underline-offset: 3px; }
 .detailButton, .conditionsButton { display: flex; align-items: center; justify-content: center; position: relative; border-radius: 999px; font: inherit; font-weight: 800; text-decoration: none; }
 .detailButton { width: 100%; min-height: 59px; padding: 12px 35px; border: 0; background: var(--color-coral); color: white; font-size: clamp(17px, 3vw, 25px); }
 .detailButton:disabled, .conditionsButton:disabled { cursor: not-allowed; opacity: 1; }
@@ -40,6 +46,7 @@
 .followUp { margin-top: 18px; text-align: center; }
 .dummyNote, .connectionNote { margin: 0; color: color-mix(in srgb, var(--color-ink) 65%, var(--color-cream)); font-size: 13px; line-height: 1.8; }
 .conditionsButton { width: 64%; min-height: 50px; padding: 10px 20px; margin: 15px auto 0; background: transparent; color: color-mix(in srgb, var(--color-ink) 65%, var(--color-cream)); border: 1px solid currentColor; font-size: 18px; }
+.conditionsButton:focus-visible, .emptyPrimary:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 4px; }
 .connectionNote { margin-top: 8px; font-size: 11px; }
 .disclaimer { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 24px; color: color-mix(in srgb, var(--color-ink) 65%, var(--color-cream)); }
 .disclaimer::before, .disclaimer::after { content: ""; height: 1px; flex: 1; background: color-mix(in srgb, var(--color-ink) 12%, transparent); }

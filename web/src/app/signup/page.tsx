@@ -3,10 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 import styles from "./page.module.css";
 import PasswordCharacter from "./PasswordCharacter";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
@@ -16,9 +19,41 @@ export default function SignupPage() {
   const [confirmationTouched, setConfirmationTouched] = useState(false);
   const showMatch = confirmationTouched && confirmation.length > 0;
   const passwordsMatch = password === confirmation;
+  const [formError, setFormError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   function validateEmail(input: HTMLInputElement) {
     setEmailError(input.validity.valueMissing ? "メールアドレスを入力してください。" : input.validity.typeMismatch ? "メールアドレスの形式を確認してください（例：student@example.com）。" : "");
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFormError("");
+    if (!passwordsMatch) {
+      setConfirmationTouched(true);
+      setFormError("確認用パスワードが一致していません。");
+      return;
+    }
+    const fields = new FormData(event.currentTarget);
+    const email = String(fields.get("email")).trim().toLowerCase();
+    if (!email.endsWith("@example.com")) {
+      setFormError("開発中は @example.com の架空メールアドレスだけ登録できます。");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const { error } = await authClient.signUp.email({ name: "デモ学生", email, password });
+      if (error) {
+        setFormError(error.status === 400 ? "入力内容を確認してください。架空メールと8文字以上のパスワードが必要です。" : "登録できませんでした。接続と入力内容を確認してください。");
+        return;
+      }
+      router.push("/");
+      router.refresh();
+    } catch {
+      setFormError("サーバーに接続できませんでした。時間をおいて再試行してください。");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -46,13 +81,13 @@ export default function SignupPage() {
           <p className="hero-description">アカウントを作成して、<br />あなたに合う企業探しを始めよう。</p>
         </div>
 
-        {/* 認証APIの仕様確定後に接続する。入力内容の送信・保存は行わない。 */}
-        <form className={styles.form} onSubmit={(event) => event.preventDefault()} aria-describedby="signup-note">
+        <form className={styles.form} method="post" onSubmit={handleSubmit} aria-describedby="signup-note">
           <div className={styles.field}>
             <label className="font-bold" htmlFor="email">メールアドレス</label>
             <input
               className={styles.input}
               id="email"
+              name="email"
               type="email"
               autoComplete="username"
               inputMode="email"
@@ -128,10 +163,11 @@ export default function SignupPage() {
           </div>
 
           <div className="text-center">
-            <button className={`start-button w-full ${styles.signupButton}`} type="submit" disabled aria-describedby="signup-note">
-              アカウントを作成
+            <button className={`start-button w-full ${styles.signupButton}`} type="submit" disabled={submitting} aria-describedby="signup-note">
+              {submitting ? "登録中…" : "アカウントを作成"}
             </button>
-            <p id="signup-note" className="availability-note">新規登録機能は準備中です。</p>
+            <p id="signup-note" className="availability-note">開発中は @example.com の架空メールアドレスだけ登録できます。実在の個人情報は入力しないでください。</p>
+            {formError && <p className={styles.feedback} role="alert">{formError}</p>}
           </div>
         </form>
 
