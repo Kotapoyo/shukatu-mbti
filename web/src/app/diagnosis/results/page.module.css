@@ -1,0 +1,115 @@
+.screen {
+  width: 100%;
+  max-width: 720px;
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 24px 24px 0;
+  background: var(--color-cream);
+}
+
+.header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent); }
+.brand { display: inline-flex; align-items: center; gap: 8px; color: var(--color-ink); font-size: clamp(24px, 5vw, 34px); font-weight: 950; letter-spacing: -.055em; text-decoration: none; white-space: nowrap; }
+.brand img { width: 44px; height: 42px; }
+.pageLabel { margin: 0; font-size: clamp(14px, 2.7vw, 20px); font-weight: 800; white-space: nowrap; }
+.intro { padding-top: 30px; }
+.headingWrap { position: relative; padding: 0 28px; }
+.heading { margin: 0; text-align: center; font-size: clamp(25px, 5.6vw, 42px); font-weight: 950; letter-spacing: -.05em; line-height: 1.4; }
+.rays { position: absolute; left: 4px; bottom: 3px; display: grid; gap: 13px; }
+.rays i { width: 24px; height: 6px; border-radius: 999px; background: var(--color-mint); transform: rotate(35deg); }
+.rays i:last-child { width: 18px; background: var(--color-purple); transform: rotate(10deg); }
+.raysRight { left: auto; right: 4px; transform: scaleX(-1); }
+.summary { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px; }
+.flower { width: 78px; height: 74px; flex-shrink: 0; transform: rotate(-13deg); }
+.summary p { margin: 0; font-size: clamp(16px, 3.4vw, 26px); font-weight: 800; line-height: 1.6; letter-spacing: -.035em; }
+.summary strong { color: var(--color-coral); margin: 0 3px; font-size: 1.18em; }
+.companyList { display: grid; gap: 42px; margin-top: 24px; }
+.company { --company-color: var(--color-mint); display: grid; grid-template-columns: 180px minmax(0, 1fr); column-gap: 24px; align-items: start; }
+.company[data-tone="purple"] { --company-color: var(--color-purple); }
+.companyArt { color: var(--company-color); padding-top: 2px; }
+.companyArt svg { display: block; width: 100%; height: auto; }
+.companyContent { min-width: 0; }
+.companyName { margin: 6px 0 0; padding-bottom: 13px; border-bottom: 2px solid color-mix(in srgb, var(--company-color) 65%, var(--color-cream)); font-size: clamp(21px, 3.8vw, 33px); line-height: 1.5; font-weight: 950; letter-spacing: -.055em; overflow-wrap: anywhere; }
+.score { margin: 10px 0 0; font-size: 14px; line-height: 1.5; }
+.reasons { display: grid; gap: 10px; padding: 0; margin: 18px 0 20px; list-style: none; }
+.reasons li { display: flex; align-items: flex-start; gap: 10px; font-size: clamp(15px, 2.7vw, 21px); line-height: 1.65; letter-spacing: -.035em; }
+.check { display: grid; place-items: center; width: 29px; height: 29px; flex-shrink: 0; margin-top: 3px; border-radius: 50%; background: var(--company-color); }
+.check svg { width: 21px; height: 21px; fill: none; stroke: white; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.saveButton { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin-bottom: 10px; padding: 10px 16px; border: 2px solid var(--color-mint); border-radius: 999px; background: var(--color-cream); color: var(--color-ink); font: inherit; font-weight: 800; text-decoration: none; cursor: pointer; }
+.saveButton:disabled { opacity: .65; cursor: default; }
+.saveButton:focus-visible, .savedLink:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px; }
+.saveError { margin: 0 0 10px; color: var(--color-ink); font-size: 14px; }
+.savedLink { display: inline-block; margin-bottom: 16px; color: var(--color-ink); font-weight: 800; text-underline-offset: 3px; }
+.detailButton, .conditionsButton { display: flex; align-items: center; justify-content: center; position: relative; border-radius: 999px; font: inherit; font-weight: 800; text-decoration: none; }
+.detailButton { width: 100%; min-height: 59px; padding: 12px 35px; border: 0; background: var(--color-coral); color: white; font-size: clamp(17px, 3vw, 25px); }
+.detailButton:disabled, .conditionsButton:disabled { cursor: not-allowed; opacity: 1; }
+.chevron { position: absolute; right: 25px; width: 10px; height: 10px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); }
+.followUp { margin-top: 18px; text-align: center; }
+.dummyNote, .connectionNote { margin: 0; color: color-mix(in srgb, var(--color-ink) 65%, var(--color-cream)); font-size: 13px; line-height: 1.8; }
+.conditionsButton { width: 64%; min-height: 50px; padding: 10px 20px; margin: 15px auto 0; background: transparent; color: color-mix(in srgb, var(--color-ink) 65%, var(--color-cream)); border: 1px solid currentColor; font-size: 18px; }
+.conditionsButton:focus-visible, .emptyPrimary:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 4px; }
+.connectionNote { margin-top: 8px; font-size: 11px; }
+.disclaimer { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 24px; color: color-mix(in srgb, var(--color-ink) 65%, var(--color-cream)); }
+.disclaimer::before, .disclaimer::after { content: ""; height: 1px; flex: 1; background: color-mix(in srgb, var(--color-ink) 12%, transparent); }
+.disclaimer > span { display: grid; place-items: center; width: 17px; height: 17px; border-radius: 50%; background: color-mix(in srgb, var(--color-ink) 45%, var(--color-cream)); color: var(--color-cream); font: bold 13px Georgia, serif; }
+.disclaimer p { margin: 0; font-size: 12px; line-height: 1.7; }
+.navigation { display: grid; grid-template-columns: 1fr 1fr; padding: 15px 0 20px; margin-top: 17px; border-top: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent); }
+.navigation a, .navigation button { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--color-ink); font: inherit; font-size: 13px; text-decoration: none; background: none; border: 0; padding: 0; }
+.navigation a { color: var(--color-coral); }
+.navigation svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.navigation a svg { fill: currentColor; }
+.navigation small { font-size: 10px; }
+.brand:focus-visible, .navigation a:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 5px; border-radius: 4px; }
+.emptyState { padding-top: 48px; }
+.emptyHeading { margin: 0; text-align: center; font-size: clamp(24px, 5.2vw, 39px); font-weight: 950; letter-spacing: -.055em; line-height: 1.5; }
+.emptyArt { width: 72%; max-width: 420px; margin: 30px auto 24px; }
+.emptyArt svg { display: block; width: 100%; height: auto; }
+.emptyCard { padding: 34px 48px 26px; border-radius: 34px; background: white; text-align: center; }
+.emptyMessage { margin: 0 0 30px; font-size: clamp(20px, 3.8vw, 29px); font-weight: 800; line-height: 1.7; letter-spacing: -.035em; }
+.emptyPrimary, .emptyHome { display: flex; align-items: center; justify-content: center; position: relative; width: 100%; min-height: 72px; padding: 16px 42px; border-radius: 999px; font: inherit; font-size: clamp(20px, 3.6vw, 28px); font-weight: 800; text-decoration: none; }
+.emptyPrimary { border: 0; background: var(--color-coral); color: white; }
+.emptyPrimary:disabled { opacity: 1; cursor: not-allowed; }
+.emptyHome { margin-top: 17px; border: 1px solid color-mix(in srgb, var(--color-ink) 55%, white); background: transparent; color: var(--color-ink); }
+.emptyHome:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 4px; }
+.emptyCard .connectionNote { margin-top: 14px; }
+.emptyScreen .disclaimer { margin-top: 30px; }
+.emptyScreen .disclaimer::before, .emptyScreen .disclaimer::after, .emptyScreen .disclaimer > span { display: none; }
+.emptyScreen .disclaimer p { font-size: 14px; }
+.emptyScreen .navigation { margin-top: 20px; }
+@media (max-width: 520px) {
+  .emptyState { padding-top: 32px; }
+  .emptyArt { width: 85%; margin: 24px auto 20px; }
+  .emptyCard { border-radius: 26px; padding: 28px 22px 22px; }
+  .emptyMessage { margin-bottom: 24px; }
+  .emptyPrimary, .emptyHome { min-height: 58px; font-size: 20px; padding: 13px 34px; }
+  .emptyPrimary .chevron, .emptyHome .chevron { right: 20px; }
+  .screen { padding: 22px 18px 0; }
+  .brand { gap: 5px; }
+  .brand img { width: 32px; height: 31px; }
+  .intro { padding-top: 25px; }
+  .headingWrap { padding-inline: 15px; }
+  .rays { left: 0; gap: 9px; }
+  .rays i { width: 15px; height: 5px; }
+  .rays i:last-child { width: 12px; }
+  .raysRight { right: 0; left: auto; }
+  .summary { gap: 6px; margin-top: 12px; }
+  .flower { width: 51px; height: 49px; }
+  .summary p { font-size: clamp(14px, 3.6vw, 19px); }
+  .companyList { margin-top: 24px; gap: 32px; }
+  .company { grid-template-columns: 83px minmax(0, 1fr); gap: 12px; }
+  .companyArt { padding-top: 8px; }
+  .companyName { font-size: clamp(18px, 4.6vw, 24px); padding-bottom: 10px; margin-top: 0; }
+  .reasons { margin-block: 12px 16px; gap: 8px; }
+  .reasons li { gap: 7px; font-size: 14px; }
+  .check { width: 22px; height: 22px; margin-top: 1px; }
+  .check svg { width: 17px; height: 17px; }
+  .detailButton { min-height: 48px; font-size: 16px; padding: 10px 26px 10px 12px; }
+  .chevron { right: 17px; width: 8px; height: 8px; }
+  .conditionsButton { width: 80%; font-size: 16px; min-height: 46px; }
+}
+@media (max-width: 350px) {
+  .screen { padding-inline: 14px; }
+  .company { grid-template-columns: 64px minmax(0, 1fr); gap: 9px; }
+  .heading { font-size: 23px; }
+  .summary p { font-size: 13px; }
+  .pageLabel { font-size: 13px; }
+}
