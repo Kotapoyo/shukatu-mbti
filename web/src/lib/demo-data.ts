@@ -41,7 +41,40 @@ export type DemoCompany = DummyCompany & {
   applicationUrl: string | null;
   sourceUrl: string | null;
   verifiedAt: string | null;
+  socialDrinks?: string | null;
+  graduatePlacement?: string | null;
+  transferPolicy?: string | null;
+  remotePolicy?: string | null;
+  paidLeave?: string | null;
+  holidayContact?: string | null;
+  companyEvents?: string | null;
+  turnoverWithinThreeYears?: string | null;
+  graduateGap?: string | null;
 };
+
+export const companyDetailFields = [
+  ["socialDrinks", "飲み会"],
+  ["graduatePlacement", "新卒配属"],
+  ["transferPolicy", "転勤"],
+  ["remotePolicy", "リモート"],
+  ["paidLeave", "有給"],
+  ["holidayContact", "休日連絡"],
+  ["companyEvents", "社内イベント"],
+  ["turnoverWithinThreeYears", "3年以内離職率"],
+  ["graduateGap", "新卒がギャップを感じやすい点"],
+] as const;
+
+export const companyDetailExamples = {
+  socialDrinks: "月1回程度、参加自由",
+  graduatePlacement: "希望提出可、希望通過率約65%",
+  transferPolicy: "可能性あり、本人との面談後に決定",
+  remotePolicy: "新人研修終了後から週2日",
+  paidLeave: "前日申請も可能",
+  holidayContact: "原則なし",
+  companyEvents: "年2回、任意参加",
+  turnoverWithinThreeYears: "12%",
+  graduateGap: "最初の半年は問い合わせ対応が多い",
+} as const;
 
 type DemoSavedCompany = { id: string; name: string };
 type JsonRecord = Record<string, unknown>;
@@ -94,6 +127,7 @@ export function isDemoCompany(value: unknown): value is DemoCompany {
   if (!optionalText(value.holidays, 120) || !optionalNumber(value.plannedHires, 0, 100_000)) return false;
   if (!optionalText(value.workStyle, 2000) || !optionalText(value.benefits, 2000)) return false;
   if (!optionalText(value.applicationUrl, 2000) || !optionalText(value.sourceUrl, 2000) || !optionalText(value.verifiedAt, 20)) return false;
+  if (!companyDetailFields.every(([field]) => value[field] === undefined || optionalText(value[field], 500))) return false;
   if (typeof value.recruitingGraduates !== "boolean" || !record(value.ratings)) return false;
   return scoredQuestions.every((question) => {
     const rating = (value.ratings as JsonRecord)[question.id];

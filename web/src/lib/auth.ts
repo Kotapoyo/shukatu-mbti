@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { APIError, createAuthMiddleware } from "better-auth/api";
+import { bearer } from "better-auth/plugins";
 import { createPool } from "mysql2/promise";
 import { isDemoEmail } from "./auth-policy";
 
@@ -28,6 +29,7 @@ export const db = createPool({
 
 export const auth = betterAuth({
   database: db,
+  plugins: [bearer({ requireSignature: true })],
   emailAndPassword: { enabled: true, minPasswordLength: 8 },
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
