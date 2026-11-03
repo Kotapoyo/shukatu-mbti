@@ -39,7 +39,7 @@
 .endpoints { display: flex; justify-content: space-between; gap: 30px; margin-top: 9px; font-size: 16px; font-weight: 800; line-height: 1.5; }
 .endpoints span { max-width: 46%; color: color-mix(in srgb, var(--color-purple) 80%, var(--color-ink)); }
 .endpoints span:last-child { color: color-mix(in srgb, var(--color-mint) 65%, var(--color-ink)); text-align: right; }
-.selected { min-height: 1.6em; margin: 8px 0 0; text-align: center; font-size: 12px; line-height: 1.6; color: color-mix(in srgb, var(--color-ink) 72%, var(--color-cream)); }
+.selected { min-height: 1.6em; margin: 8px 0 0; text-align: center; font-size: 16px; font-weight: 800; line-height: 1.6; color: var(--color-ink); }
 .location { margin: 10px 0 0; }
 .location span { display: block; font-size: 12px; }
 .pageHint { text-align: center; margin: 0 0 14px; }

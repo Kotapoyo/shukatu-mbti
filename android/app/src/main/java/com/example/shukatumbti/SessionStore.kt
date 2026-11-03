@@ -16,16 +16,19 @@ internal class SessionStore(context: Context) {
     private val preferences = context.getSharedPreferences("android_session", Context.MODE_PRIVATE)
     private val alias = "shukatu_mbti_session_v1"
 
-    fun save(token: String) {
+    data class StoredSession(val token: String, val email: String?)
+
+    fun save(token: String, email: String) {
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(Cipher.ENCRYPT_MODE, key(create = true))
-        val encoded = "${base64(cipher.iv)}:${base64(cipher.doFinal(token.toByteArray(Charsets.UTF_8)))}"
+        val payload = "$token\n$email"
+        val encoded = "${base64(cipher.iv)}:${base64(cipher.doFinal(payload.toByteArray(Charsets.UTF_8)))}"
         if (!preferences.edit().putString("token", encoded).commit()) {
             throw IOException("セッションを保存できませんでした。")
         }
     }
 
-    fun load(): String? {
+    fun load(): StoredSession? {
         val encoded = preferences.getString("token", null) ?: return null
         val parts = encoded.split(':')
         if (parts.size != 2) throw GeneralSecurityException("保存セッションの形式が正しくありません。")
@@ -40,7 +43,8 @@ internal class SessionStore(context: Context) {
         if (iv.size != 12) throw GeneralSecurityException("保存セッションのIVが正しくありません。")
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(Cipher.DECRYPT_MODE, key(create = false), GCMParameterSpec(128, iv))
-        return String(cipher.doFinal(ciphertext), Charsets.UTF_8)
+        val payload = String(cipher.doFinal(ciphertext), Charsets.UTF_8).split('\n', limit = 2)
+        return StoredSession(payload[0], payload.getOrNull(1))
     }
 
     fun clear() {

@@ -57,6 +57,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -77,6 +78,7 @@ internal class AndroidState : ViewModel() {
         private set
     private var initialized = false
     var token by mutableStateOf<String?>(null)
+    var email by mutableStateOf<String?>(null)
     var page by mutableStateOf(Page.LOADING)
     var conditions by mutableStateOf<Conditions?>(null)
     var profile by mutableStateOf<StudentProfile?>(null)
@@ -102,8 +104,9 @@ internal class AndroidState : ViewModel() {
             try {
                 val saved = withContext(Dispatchers.IO) { store.load() }
                 if (saved != null) {
-                    conditions = api.getConditions(saved)
-                    token = saved
+                    conditions = api.getConditions(saved.token)
+                    token = saved.token
+                    email = saved.email
                     page = Page.HOME
                 } else page = Page.LOGIN
             } catch (cause: ApiException) {
@@ -143,6 +146,7 @@ internal fun AndroidApp(state: AndroidState) {
     val api = state.api
     val scope = state.viewModelScope
     var token by state::token
+    var email by state::email
     var page by state::page
     var conditions by state::conditions
     var profile by state::profile
@@ -175,6 +179,7 @@ internal fun AndroidApp(state: AndroidState) {
                         error = clearError.message
                     }
                     token = null
+                    email = null
                     conditions = null
                     profile = null
                     profileOptions = null
@@ -238,13 +243,14 @@ internal fun AndroidApp(state: AndroidState) {
                     run {
                         val newToken = api.authenticate(email, password, register)
                         val newConditions = api.getConditions(newToken)
-                        withContext(Dispatchers.IO) { state.sessionStore.save(newToken) }
+                        withContext(Dispatchers.IO) { state.sessionStore.save(newToken, email) }
                         conditions = newConditions
                         token = newToken
+                        state.email = email
                         page = Page.HOME
                     }
                 }
-                Page.HOME -> HomeScreen(busy, onStart = {
+                Page.HOME -> HomeScreen(email, busy, onStart = {
                     run {
                         questions = api.getQuestions()
                         answers = emptyMap()
@@ -256,6 +262,7 @@ internal fun AndroidApp(state: AndroidState) {
                     if (currentToken != null) run {
                         withContext(Dispatchers.IO) { state.sessionStore.clear() }
                         token = null
+                        email = null
                         conditions = null
                         profile = null
                         profileOptions = null
@@ -269,14 +276,6 @@ internal fun AndroidApp(state: AndroidState) {
                 })
                 Page.PROFILE -> profileOptions?.let { options ->
                     ProfileScreen(profile, options, conditions, profileMessage, busy,
-                        onSaveConditions = { next ->
-                            val currentToken = token
-                            if (currentToken != null) run {
-                                api.putConditions(currentToken, next)
-                                conditions = next
-                                profileMessage = "希望条件を保存しました。"
-                            }
-                        },
                         onSaveProfile = { nextProfile, nextConditions ->
                             val currentToken = token
                             if (currentToken != null) run {
@@ -370,8 +369,10 @@ private fun LoginScreen(busy: Boolean, onSubmit: (String, String, Boolean) -> Un
             modifier = Modifier.fillMaxWidth().height(110.dp))
         Spacer(Modifier.height(32.dp))
         Text(if (register) "新規登録" else "ログイン", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-        Spacer(Modifier.height(12.dp))
-        Text("開発中は @example.com の架空メールを使用してください。")
+        if (register) {
+            Spacer(Modifier.height(12.dp))
+            Text("登録には @example.com のメールアドレスを使用してください。")
+        }
         Spacer(Modifier.height(16.dp))
         OutlinedTextField(email, { email = it }, label = { Text("メールアドレス") }, singleLine = true,
             readOnly = busy, modifier = Modifier.fillMaxWidth())
@@ -390,8 +391,17 @@ private fun LoginScreen(busy: Boolean, onSubmit: (String, String, Boolean) -> Un
 }
 
 @Composable
-private fun HomeScreen(busy: Boolean, onStart: () -> Unit, onLogout: () -> Unit) {
+private fun HomeScreen(email: String?, busy: Boolean, onStart: () -> Unit, onLogout: () -> Unit) {
     ScreenColumn {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically) {
+            Text(email?.let(::abbreviateEmail) ?: "ログイン中", style = MaterialTheme.typography.labelMedium,
+                color = Ink, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.End,
+                modifier = Modifier.weight(1f))
+            Spacer(Modifier.width(8.dp))
+            OutlinedButton(onClick = onLogout, enabled = !busy) { Text("ログアウト") }
+        }
+        Spacer(Modifier.height(8.dp))
         Brand()
         Spacer(Modifier.height(16.dp))
         Image(painterResource(R.drawable.character_flower), contentDescription = "笑顔の赤いお花のキャラクター",
@@ -412,11 +422,12 @@ private fun HomeScreen(busy: Boolean, onStart: () -> Unit, onLogout: () -> Unit)
             StepCard("2", "働き方の相性を\n診断する", R.drawable.character_flower, Mint, Modifier.weight(1f))
             StepCard("3", "あなたに合う\n企業を提案", R.drawable.companies, Purple, Modifier.weight(1f))
         }
-        Spacer(Modifier.height(12.dp))
-        Text("架空企業によるデモです。", style = MaterialTheme.typography.bodySmall)
-        Spacer(Modifier.height(16.dp))
-        TextButton(onClick = onLogout, enabled = !busy) { Text("ログアウト") }
     }
+}
+
+private fun abbreviateEmail(email: String): String {
+    val local = email.substringBefore('@')
+    return "${local.take(3)}…@${email.substringAfter('@')}"
 }
 
 @Composable
@@ -438,7 +449,6 @@ private fun StepCard(number: String, label: String, image: Int, color: Color, mo
 private fun ProfileScreen(
     profile: StudentProfile?, options: ProfileOptions, conditions: Conditions?,
     message: String?, busy: Boolean,
-    onSaveConditions: (Conditions) -> Unit,
     onSaveProfile: (StudentProfile, Conditions) -> Unit,
 ) {
     var graduationYear by rememberSaveable(profile?.graduationYear) {
@@ -478,8 +488,6 @@ private fun ProfileScreen(
                 Text("希望条件を登録すると、企業の募集条件と照合できます。", color = Color.White)
             }
         }
-        Spacer(Modifier.height(12.dp))
-        Text("開発中は架空の学生情報だけを入力してください。")
         Spacer(Modifier.height(18.dp))
         Card(shape = RoundedCornerShape(28.dp),
             colors = CardDefaults.cardColors(containerColor = Color(0xFFFFFDF8))) {
@@ -534,8 +542,6 @@ private fun ProfileScreen(
             enabled = !busy && validProfile, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)) {
             Text("プロフィールを保存する")
         }
-        TextButton(onClick = { onSaveConditions(Conditions(location, salaryYen)) },
-            enabled = !busy && validConditions) { Text("希望条件だけを保存する") }
         if (message != null) Text(message, color = Ink, style = MaterialTheme.typography.bodyMedium)
     }
 }
@@ -719,7 +725,6 @@ private fun CompanyDetailScreen(
         Spacer(Modifier.height(12.dp))
         Text(company.name, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black)
         Spacer(Modifier.height(12.dp))
-        Text("架空企業のデモ情報です。", style = MaterialTheme.typography.bodyMedium)
         Spacer(Modifier.height(20.dp))
         InfoCard("提案理由", if (company.reasons.isEmpty()) "この保存企業に紐づく診断理由はありません。"
             else company.reasons.joinToString("\n") { "✓  $it" })
@@ -785,5 +790,5 @@ private fun ScreenColumn(content: @Composable () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun HomePreview() {
-    ShukatuMbtiTheme { HomeScreen(false, {}, {}) }
+    ShukatuMbtiTheme { HomeScreen("student@example.com", false, {}, {}) }
 }

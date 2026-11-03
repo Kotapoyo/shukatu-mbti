@@ -68,7 +68,7 @@ internal class ApiClient {
     suspend fun authenticate(email: String, password: String, register: Boolean): String {
         val path = if (register) "/api/auth/sign-up/email" else "/api/auth/sign-in/email"
         val body = JSONObject().put("email", email).put("password", password)
-        if (register) body.put("name", "デモ学生")
+        if (register) body.put("name", "学生")
         val (_, response) = call(path, HttpMethod.Post, body = body)
         return response.headers["set-auth-token"] ?: error("認証トークンが返されませんでした。")
     }

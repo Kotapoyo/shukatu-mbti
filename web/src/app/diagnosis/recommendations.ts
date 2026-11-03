@@ -43,7 +43,7 @@ const reasonLabels: Record<QuestionId, string> = {
 export const dummyCompanies: readonly DummyCompany[] = [
   {
     id: "sample-tech",
-    name: "サンプル情報技研株式会社",
+    name: "青葉情報技研株式会社",
     recruitingGraduates: true,
     location: "東京都",
     monthlySalaryYen: 260000,
@@ -51,7 +51,7 @@ export const dummyCompanies: readonly DummyCompany[] = [
   },
   {
     id: "sample-service",
-    name: "サンプル地域サービス株式会社",
+    name: "みなと地域サービス株式会社",
     recruitingGraduates: true,
     location: "大阪府",
     monthlySalaryYen: 220000,
@@ -59,7 +59,7 @@ export const dummyCompanies: readonly DummyCompany[] = [
   },
   {
     id: "sample-manufacturing",
-    name: "サンプルものづくり株式会社",
+    name: "東雲ものづくり株式会社",
     recruitingGraduates: true,
     location: "東京都",
     monthlySalaryYen: 230000,
@@ -67,7 +67,7 @@ export const dummyCompanies: readonly DummyCompany[] = [
   },
   {
     id: "sample-closed",
-    name: "サンプル募集終了株式会社",
+    name: "北星工業株式会社",
     recruitingGraduates: false,
     location: "東京都",
     monthlySalaryYen: 250000,
@@ -75,7 +75,7 @@ export const dummyCompanies: readonly DummyCompany[] = [
   },
   {
     id: "sample-unconfirmed",
-    name: "サンプル評価未確認株式会社",
+    name: "若葉ソリューションズ株式会社",
     recruitingGraduates: true,
     location: "東京都",
     monthlySalaryYen: 250000,

@@ -61,7 +61,7 @@ export default function RecommendationResults() {
   }, [isPending, userId, sessionError]);
 
   if (answerState.status === "ready") {
-    if (sessionError || demoState.status === "error") return <main className={styles.screen}><p role="alert">デモデータを読み込めませんでした。ログイン状態とブラウザーの保存データを確認してください。</p></main>;
+    if (sessionError || demoState.status === "error") return <main className={styles.screen}><p role="alert">提案結果を読み込めませんでした。ログイン状態とブラウザーの保存データを確認してください。</p></main>;
     if (isPending || demoState.status !== "ready" || demoState.userId !== userId) return <main className={styles.screen} aria-busy="true"><p>提案結果を読み込んでいます。</p></main>;
     return <ResultsView
       key={userId ?? "guest"}
@@ -84,7 +84,7 @@ export default function RecommendationResults() {
           {answerState.status === "missing" ? "診断回答がまだありません" : "診断回答を読み込めませんでした"}
         </h1>
         <div className={styles.emptyCard}>
-          <p className={styles.emptyMessage}>12問に回答すると、架空の企業から相性が近い候補を表示できます。</p>
+          <p className={styles.emptyMessage}>12問に回答すると、相性が近い企業を表示できます。</p>
           <Link className={styles.emptyHome} href="/diagnosis">診断を始める<span className={styles.chevron} aria-hidden="true" /></Link>
         </div>
       </section>

@@ -13,11 +13,14 @@ export default function AccountStatus() {
 
   if (isPending) return null;
   if (sessionError) return <p className={styles.accountStatus} role="alert">ログイン状態を確認できませんでした。MySQLへの接続を確認してください。</p>;
-  if (!session) return <Link className={styles.accountLink} href="/login">ログイン・新規登録</Link>;
+  if (!session) return <nav className={styles.accountStatus} aria-label="アカウント"><Link className={styles.accountLink} href="/login">ログイン</Link><Link className={styles.accountLink} href="/signup">新規登録</Link></nav>;
+
+  const [local, domain] = session.user.email.split("@");
+  const partialEmail = `${local.slice(0, 3)}…@${domain}`;
 
   return (
     <div className={styles.accountStatus}>
-      <span>デモ学生としてログイン中</span>
+      <span className={styles.accountName} title={session.user.email} aria-label={`ログイン中：${session.user.email}`}>{partialEmail}</span>
       <button type="button" onClick={async () => {
         setError("");
         try {
