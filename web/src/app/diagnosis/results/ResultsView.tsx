@@ -108,7 +108,6 @@ export default function ResultsView({ companies, answers, userId, demoCompanies,
               <div className={styles.companyArt}><CompanyIllustration letter={String.fromCharCode(65 + index)} /></div>
               <div className={styles.companyContent}>
                 <h2 id={`company-${company.id}`} className={styles.companyName}>{company.name}</h2>
-                <p className={styles.score}>評価の差の合計：{company.difference}点（小さいほど近い）</p>
                 <ul className={styles.reasons} aria-label="提案理由">
                   {company.reasons.map((reason) => (
                     <li key={reason}><span className={styles.check} aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-9" /></svg></span><span>{reason}</span></li>
@@ -126,7 +125,7 @@ export default function ResultsView({ companies, answers, userId, demoCompanies,
                     {savedIds.has(company.id) ? "保存済み" : savingId === company.id ? "保存中…" : "この企業を保存"}
                   </button>
                 )}
-                <button className={styles.detailButton} type="button" disabled title="企業詳細画面は準備中です" aria-describedby="connection-note">企業詳細を見る<span className={styles.chevron} aria-hidden="true" /></button>
+                <Link className={styles.detailButton} href={`/companies/${encodeURIComponent(company.id)}`}>企業詳細を見る<span className={styles.chevron} aria-hidden="true" /></Link>
               </div>
             </article>
           ))}
@@ -135,14 +134,11 @@ export default function ResultsView({ companies, answers, userId, demoCompanies,
       <div className={styles.followUp}>
         {saveState === "error" && <p className={styles.saveError} role="alert">保存状態を読み込めませんでした。</p>}
         {saveError && <p className={styles.saveError} role="alert">{saveError}</p>}
-        <Link className={styles.savedLink} href="/saved-companies">保存した企業を見る</Link>
-        <p className={styles.dummyNote}>※ 架空企業と、このブラウザーで登録したデモ企業による提案です。{profile ? "希望勤務地と最低月給を判定しています。" : "プロフィール未登録のため、勤務地と月給は判定していません。"} 通勤距離の回答は点差に含めていません。</p>
-        <Link className={styles.conditionsButton} href="/profile">希望条件を見直す</Link>
-        <p className={styles.connectionNote} id="connection-note">企業詳細画面は準備中です。</p>
+        <Link className={styles.savedLink} href="/saved-companies">★ 保存した企業の一覧を見る</Link>
+        <Link className={styles.conditionsButton} href="/diagnosis">診断をやり直す</Link>
       </div>
       </> : <EmptyResults />}
 
-      <footer className={styles.disclaimer}><span aria-hidden="true">i</span><p>診断は企業選びの参考です</p></footer>
       <nav className={styles.navigation} aria-label="学生メニュー">
         <Link href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z" /></svg><span>ホーム</span></Link>
         <Link href="/profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4" /><path d="M4 22v-2a8 8 0 0 1 16 0v2" /></svg><span>プロフィール</span></Link>

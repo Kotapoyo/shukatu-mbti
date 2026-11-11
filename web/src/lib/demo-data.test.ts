@@ -50,3 +50,11 @@ test("保存APIへ送る希望条件は勤務地と最低月給だけを検証�
   assert.equal(isDemoConditions({ workLocation: "不明", minimumMonthlySalaryYen: 250000 }), false);
   assert.equal(isDemoConditions({ workLocation: "東京都", minimumMonthlySalaryYen: -1 }), false);
 });
+
+test("企業詳細の入力値を保存し、旧データの未入力項目も読み込める", () => {
+  const storage = memoryStorage();
+  const withDetails = { ...company, socialDrinks: "月1回程度、参加自由", graduateGap: "最初の半年は問い合わせ対応が多い" };
+  saveDemoCompanies(storage, "student-a", [withDetails, company]);
+  assert.deepEqual(loadDemoCompanies(storage, "student-a"), [withDetails, company]);
+  assert.throws(() => saveDemoCompanies(storage, "student-a", [{ ...company, socialDrinks: "x".repeat(501) }]));
+});

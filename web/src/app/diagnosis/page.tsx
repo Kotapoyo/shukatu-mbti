@@ -52,11 +52,11 @@ export default function DiagnosisPage() {
         <progress className={styles.progress} value={answeredCount} max={questions.length} aria-label="回答済みの質問数" />
         <p className={styles.count} aria-live="polite"><strong>{String(answeredCount).padStart(2, "0")}</strong> / {String(questions.length).padStart(2, "0")}</p>
       </div>
-      <p className={styles.introduction}>あなたの希望に近い丸を、1つずつ選んでください。</p>
+      {!review && <p className={styles.introduction}>近いものを選んでください。</p>}
 
       {review ? (
         <section aria-label={`${questions.length}問の回答内容`} className={styles.review}>
-          <p className={styles.notice}>{questions.length}問すべてに回答しました。内容を確認してください。</p>
+          <p className={styles.notice}>回答を確認してください。</p>
           <dl>
             {questions.map((question, index) => (
               <div className={styles.reviewItem} key={question.id}>
@@ -65,7 +65,6 @@ export default function DiagnosisPage() {
               </div>
             ))}
           </dl>
-          <p className={styles.notice}>架空企業と、このブラウザーで登録したデモ企業を使って相性を比べます。保存済みプロフィールがある場合は、希望勤務地と最低月給も判定します。</p>
           {saveError && <p className={styles.notice} role="alert">回答を一時保存できませんでした。ブラウザーの設定を確認してから再度お試しください。</p>}
           <div className={styles.actions}>
             <button type="button" className={styles.back} onClick={() => moveTo(false)}>回答を見直す</button>
@@ -79,7 +78,7 @@ export default function DiagnosisPage() {
               <fieldset key={question.id} className={styles.question}>
                 <legend className={styles.questionTitle}>Q{index + 1}. {question.title}</legend>
                 {question.id === "commute" && (
-                  <p className={styles.location}>通勤距離の希望は、現在の提案判定には使いません。</p>
+                  <p className={styles.location}>通勤距離は提案の判定に含みません。</p>
                 )}
                 <div className={styles.scale}>
                   {answerValues.map((value) => (

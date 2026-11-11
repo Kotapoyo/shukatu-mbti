@@ -43,7 +43,7 @@ export default function SavedCompaniesList() {
         const demoCompanies = loadDemoCompanies(window.localStorage, activeUserId);
         const demoSaved = loadDemoSavedCompanies(window.localStorage, activeUserId).map((saved) => {
           const current = demoCompanies.find((company) => company.id === saved.id);
-          if (!current) throw new Error(`保存したデモ企業が見つかりません: ${saved.id}`);
+          if (!current) throw new Error(`保存した企業が見つかりません: ${saved.id}`);
           return { id: current.id, name: current.name };
         });
         setState({ status: "ready", userId: activeUserId, companies: [...demoSaved, ...data.companies] });
@@ -67,7 +67,7 @@ export default function SavedCompaniesList() {
           {state.companies.map((company) => (
             <li className={styles.companyCard} key={company.id}>
               <span className={styles.companyMark} aria-hidden="true">★</span>
-              <div><h2>{company.name}</h2><p>架空企業・保存済み</p></div>
+              <div><h2>{company.name}</h2><p>保存済み</p><Link href={`/companies/${encodeURIComponent(company.id)}`}>企業詳細を見る</Link></div>
             </li>
           ))}
         </ul>

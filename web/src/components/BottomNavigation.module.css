@@ -7,8 +7,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
-  width: min(100%, 720px);
-  margin-inline: auto;
+  width: 100%;
   padding: 10px 20px calc(10px + env(safe-area-inset-bottom));
   border-top: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
   background: var(--color-cream);

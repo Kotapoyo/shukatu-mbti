@@ -7,6 +7,11 @@
   overflow: visible;
 }
 
+.homeHeader {
+  position: relative;
+  padding-top: 48px;
+}
+
 .home :global(.brand) {
   flex: none;
   font-size: clamp(28px, 5svh, 44px);
@@ -32,8 +37,9 @@
 
 .home :global(.hero-description) {
   margin: 8px 0 12px;
-  font-size: clamp(13px, 2svh, 17px);
+  font-size: clamp(9px, 2.8vw, 17px);
   line-height: 1.45;
+  white-space: nowrap;
 }
 
 .home :global(.start-button) {
@@ -42,11 +48,6 @@
   padding-block: 8px;
   cursor: pointer;
   text-decoration: none;
-}
-
-.home :global(.availability-note) {
-  margin-top: 4px;
-  font-size: 12px;
 }
 
 .home :global(.steps-section) {
@@ -86,22 +87,6 @@
   right: -9px;
 }
 
-.home :global(.footer) {
-  min-height: 0;
-  margin: auto 0 0;
-  padding: 8px 0 0;
-}
-
-.home :global(.footer-friend),
-.home :global(.footer-dot),
-.home :global(.footer-flower) {
-  display: none;
-}
-
-.home :global(.footer p) {
-  font-size: 11px;
-}
-
 @media (max-height: 700px) {
   .home:global(.landing) {
     padding-top: 10px;
@@ -111,11 +96,10 @@
   .home :global(.brand) { font-size: 28px; }
   .home :global(.hero-art) { height: 19svh; margin-top: 6px; }
   .home :global(h1) { font-size: 22px; }
-  .home :global(.hero-description) { margin: 5px 0 8px; font-size: 12px; }
+  .home :global(.hero-description) { margin: 5px 0 8px; }
   .home :global(.start-button) { min-height: 46px; font-size: 20px; }
   .home :global(.step-card) { padding: 7px 2px 5px; }
   .home :global(.step-image) { height: 38px; }
-  .home :global(.footer) { padding-top: 4px; }
 }
 
 @media (max-width: 359px) {
@@ -123,21 +107,54 @@
   .home :global(.steps) { gap: 7px; }
   .home :global(.step-card:not(:last-child)::after) { right: -7px; }
 }
-.accountLink, .accountStatus {
+.accountStatus {
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 12px auto 0;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
   color: var(--color-ink);
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 800;
 }
 
-.accountLink { text-decoration: underline; }
+.accountLink,
 .accountStatus button {
-  border: 0;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+  background: #fffdf8;
   color: var(--color-ink);
   font: inherit;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
+}
+
+.accountLink:last-child,
+.accountStatus button {
+  border-color: var(--color-coral);
+  background: var(--color-coral);
+  color: white;
+}
+
+.accountName {
+  min-width: 0;
+  max-width: min(45vw, 220px);
+  overflow: hidden;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-mint) 25%, white);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accountLink:focus-visible,
+.accountStatus button:focus-visible {
+  outline: 3px solid var(--color-blue);
+  outline-offset: 2px;
 }

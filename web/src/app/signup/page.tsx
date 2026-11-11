@@ -37,14 +37,14 @@ export default function SignupPage() {
     const fields = new FormData(event.currentTarget);
     const email = String(fields.get("email")).trim().toLowerCase();
     if (!email.endsWith("@example.com")) {
-      setFormError("開発中は @example.com の架空メールアドレスだけ登録できます。");
+      setFormError("登録には @example.com のメールアドレスを使用してください。");
       return;
     }
     setSubmitting(true);
     try {
-      const { error } = await authClient.signUp.email({ name: "デモ学生", email, password });
+      const { error } = await authClient.signUp.email({ name: "学生", email, password });
       if (error) {
-        setFormError(error.status === 400 ? "入力内容を確認してください。架空メールと8文字以上のパスワードが必要です。" : "登録できませんでした。接続と入力内容を確認してください。");
+        setFormError(error.status === 400 ? "入力内容を確認してください。@example.com のメールアドレスと8文字以上のパスワードが必要です。" : "登録できませんでした。接続と入力内容を確認してください。");
         return;
       }
       router.push("/");
@@ -166,7 +166,7 @@ export default function SignupPage() {
             <button className={`start-button w-full ${styles.signupButton}`} type="submit" disabled={submitting} aria-describedby="signup-note">
               {submitting ? "登録中…" : "アカウントを作成"}
             </button>
-            <p id="signup-note" className="availability-note">開発中は @example.com の架空メールアドレスだけ登録できます。実在の個人情報は入力しないでください。</p>
+            <p id="signup-note" className="availability-note">登録には @example.com のメールアドレスを使用してください。</p>
             {formError && <p className={styles.feedback} role="alert">{formError}</p>}
           </div>
         </form>

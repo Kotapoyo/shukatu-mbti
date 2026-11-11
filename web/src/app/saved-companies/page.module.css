@@ -50,6 +50,8 @@
 .companyMark { display: grid; width: 48px; height: 48px; flex-shrink: 0; place-items: center; border-radius: 50%; background: var(--color-mint); color: var(--color-ink); font-size: 24px; }
 .companyCard h2 { margin: 0; font-size: clamp(17px, 4vw, 22px); line-height: 1.5; }
 .companyCard p { margin: 4px 0 0; font-size: 13px; }
+.companyCard a { display: inline-flex; min-height: 40px; align-items: center; margin-top: 10px; padding: 7px 15px; border-radius: 999px; background: var(--color-coral); color: white; font-size: 13px; font-weight: 800; text-decoration: none; }
+.companyCard a:focus-visible { outline: 3px solid var(--color-blue); outline-offset: 3px; }
 
 @media (max-width: 359px) {
   .page { padding-inline: 16px; }

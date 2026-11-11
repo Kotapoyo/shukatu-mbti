@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState, type FormEvent } from "react";
 import { authClient } from "@/lib/auth-client";
-import { loadDemoCompanies, nullableFormText, prefectures, ratingsFromForm, saveDemoCompanies, scoredQuestions, type DemoCompany } from "@/lib/demo-data";
+import { companyDetailExamples, companyDetailFields, loadDemoCompanies, nullableFormText, prefectures, ratingsFromForm, saveDemoCompanies, scoredQuestions, type DemoCompany } from "@/lib/demo-data";
 import type { QuestionId } from "@/app/diagnosis/recommendations";
 import styles from "./page.module.css";
 
@@ -56,6 +56,15 @@ function Editor({ userId }: { userId: string }) {
       applicationUrl: nullableFormText(form.get("applicationUrl")),
       sourceUrl: nullableFormText(form.get("sourceUrl")),
       verifiedAt: nullableFormText(form.get("verifiedAt")),
+      socialDrinks: nullableFormText(form.get("socialDrinks")),
+      graduatePlacement: nullableFormText(form.get("graduatePlacement")),
+      transferPolicy: nullableFormText(form.get("transferPolicy")),
+      remotePolicy: nullableFormText(form.get("remotePolicy")),
+      paidLeave: nullableFormText(form.get("paidLeave")),
+      holidayContact: nullableFormText(form.get("holidayContact")),
+      companyEvents: nullableFormText(form.get("companyEvents")),
+      turnoverWithinThreeYears: nullableFormText(form.get("turnoverWithinThreeYears")),
+      graduateGap: nullableFormText(form.get("graduateGap")),
       recruitingGraduates: form.get("recruitingGraduates") === "yes",
       ratings: ratingsFromForm(form),
     };
@@ -71,14 +80,14 @@ function Editor({ userId }: { userId: string }) {
     }
   }
 
-  if (status === "loading") return <p>デモ企業を読み込んでいます。</p>;
-  if (status === "error") return <p role="alert">保存済みデモ企業を読み込めませんでした。ブラウザーのデモデータを確認してください。</p>;
+  if (status === "loading") return <p>企業情報を読み込んでいます。</p>;
+  if (status === "error") return <p role="alert">保存済み企業情報を読み込めませんでした。ブラウザーの保存データを確認してください。</p>;
 
   return <>
-    {companies.length > 0 && <section className={styles.registered} aria-label="登録済みのデモ企業"><h2>登録済みのデモ企業</h2><ul>{companies.map((company) => <li key={company.id}><span>{company.name}</span><button type="button" onClick={() => { setEditingId(company.id); setMessage(""); }}>編集する</button></li>)}</ul></section>}
+    {companies.length > 0 && <section className={styles.registered} aria-label="登録済み企業"><h2>登録済み企業</h2><ul>{companies.map((company) => <li key={company.id}><span>{company.name}</span><button type="button" onClick={() => { setEditingId(company.id); setMessage(""); }}>編集する</button></li>)}</ul></section>}
     <form className={styles.form} onSubmit={submit} key={editingId ?? "new"}>
       <fieldset className={styles.section}><legend><span className={styles.number}>1</span> 企業について</legend><div className={styles.fields}>
-        <label className={styles.field}><span>企業名</span><input type="text" name="companyName" maxLength={120} required defaultValue={editing?.name ?? ""} placeholder="例：株式会社サンプル" autoComplete="organization" /></label>
+        <label className={styles.field}><span>企業名</span><input type="text" name="companyName" maxLength={120} required defaultValue={editing?.name ?? ""} placeholder="例：青葉情報株式会社" autoComplete="organization" /></label>
         <label className={styles.field}><span>業界</span><input type="text" name="industry" maxLength={120} defaultValue={editing?.industry ?? ""} placeholder="例：情報・通信" /></label>
         <label className={`${styles.field} ${styles.full}`}><span>事業内容</span><textarea name="description" rows={3} maxLength={2000} defaultValue={editing?.description ?? ""} placeholder="事業やサービスについて入力" /></label>
       </div></fieldset>
@@ -92,7 +101,7 @@ function Editor({ userId }: { userId: string }) {
       <fieldset className={styles.section}><legend><span className={styles.number}>3</span> 働き方・福利厚生</legend><div className={styles.fields}>
         <label className={styles.field}><span>働き方</span><textarea name="workStyle" rows={3} maxLength={2000} defaultValue={editing?.workStyle ?? ""} placeholder="勤務形態や職場の特徴など" /></label>
         <label className={styles.field}><span>福利厚生</span><textarea name="benefits" rows={3} maxLength={2000} defaultValue={editing?.benefits ?? ""} placeholder="提供している制度など" /></label>
-      </div><p className={styles.helper}>次の11項目は学生の診断回答と比べる値です。通勤距離の回答は現在の判定に使いません。</p>
+      </div><div className={styles.fields}>{companyDetailFields.map(([field, label]) => <label className={`${styles.field} ${styles.full}`} key={field}><span>{label}</span><input type="text" name={field} maxLength={500} defaultValue={editing?.[field] ?? ""} placeholder={`例：${companyDetailExamples[field]}`} /></label>)}</div><p className={styles.helper}>次の11項目は学生の診断回答と比べる値です。通勤距離の回答は現在の判定に使いません。</p>
       <div className={styles.ratings}>{scoredQuestions.map((question) => <label className={styles.field} key={question.id}><span>{ratingGuides[question.id].title}</span><small>1：{ratingGuides[question.id].low} ／ 5：{ratingGuides[question.id].high}</small><select name={`rating-${question.id}`} defaultValue={editing?.ratings[question.id] ?? ""} required><option value="" disabled>評価を選択</option>{[1, 2, 3, 4, 5].map((value) => <option key={value} value={value}>{value}</option>)}</select></label>)}</div>
       </fieldset>
       <fieldset className={styles.section}><legend><span className={styles.number}>4</span> 応募先・情報の出典</legend><div className={styles.fields}>
@@ -100,7 +109,7 @@ function Editor({ userId }: { userId: string }) {
         <label className={styles.field}><span>出典URL</span><input type="url" name="sourceUrl" maxLength={2000} defaultValue={editing?.sourceUrl ?? ""} placeholder="https://example.com/" /></label>
         <label className={styles.field}><span>自己申告日</span><input type="date" name="verifiedAt" defaultValue={editing?.verifiedAt ?? ""} /></label>
       </div><p className={styles.helper}>入力されたURLや日付は、第三者が確認したことを意味しません。</p></fieldset>
-      <div className={styles.actions}><button type="submit">{editing ? "変更を保存する" : "デモ企業を登録する"}</button>{editing && <button className={styles.cancel} type="button" onClick={() => setEditingId(null)}>新規登録に戻る</button>}{message && <p role="status">{message}</p>}{message.startsWith("保存しました") && <Link href="/diagnosis/results">診断結果で確認する</Link>}</div>
+      <div className={styles.actions}><button type="submit">{editing ? "変更を保存する" : "企業を登録する"}</button>{editing && <button className={styles.cancel} type="button" onClick={() => setEditingId(null)}>新規登録に戻る</button>}{message && <p role="status">{message}</p>}{message.startsWith("保存しました") && <Link href="/diagnosis/results">診断結果で確認する</Link>}</div>
     </form>
   </>;
 }
@@ -109,6 +118,6 @@ export default function CompanyRegisterForm() {
   const { data: session, isPending, error } = authClient.useSession();
   if (isPending) return <p>ログイン状態を確認しています。</p>;
   if (error) return <p role="alert">ログイン状態を確認できませんでした。</p>;
-  if (!session) return <p>デモ企業を登録するには<Link href="/login">ログイン</Link>してください。</p>;
+  if (!session) return <p>企業を登録するには<Link href="/login">ログイン</Link>してください。</p>;
   return <Editor key={session.user.id} userId={session.user.id} />;
 }

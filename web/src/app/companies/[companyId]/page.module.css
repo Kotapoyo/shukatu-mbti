@@ -6,7 +6,7 @@
 .character { position: absolute; z-index: 1; width: 155px; right: -18px; top: -10px; pointer-events: none; }
 .character svg { display: block; width: 100%; overflow: visible; }
 .report { padding: 24px 22px 20px; background: white; border-radius: 26px; }
-.identity { display: grid; grid-template-columns: 165px minmax(0, 1fr); align-items: center; gap: 22px; margin-bottom: 20px; }
+.identity { margin-bottom: 20px; }
 .building svg { display: block; width: 100%; height: auto; }
 .identityText { min-width: 0; }
 .companyName { margin: 0; font-size: clamp(23px, 3.9vw, 33px); font-weight: 950; line-height: 1.45; letter-spacing: -.05em; overflow-wrap: anywhere; }
@@ -22,11 +22,11 @@
 .reasons svg { width: 43px; height: 43px; flex-shrink: 0; color: var(--color-purple); }
 .exampleNote { margin: 6px 2px 0; color: color-mix(in srgb, var(--color-ink) 68%, white); font-size: 12px; line-height: 1.7; }
 .infoPanel { padding: 8px 15px; margin: 0; background: color-mix(in srgb, var(--section-color) 10%, white); border-radius: 18px; }
-.infoRow { display: grid; grid-template-columns: 190px minmax(0, 1fr); align-items: center; gap: 17px; min-height: 54px; padding: 8px 0; }
+.infoRow { display: grid; grid-template-columns: minmax(125px, 40%) minmax(0, 1fr); align-items: center; gap: 17px; min-height: 54px; padding: 8px 0; }
 .infoRow + .infoRow { border-top: 1px solid color-mix(in srgb, var(--section-color) 20%, white); }
-.infoRow dt { display: flex; align-items: center; gap: 14px; font-size: 17px; font-weight: 800; }
+.infoRow dt { display: flex; align-items: center; gap: 14px; font-size: 17px; font-weight: 800; overflow-wrap: anywhere; }
 .infoRow svg { width: 31px; height: 31px; flex-shrink: 0; color: color-mix(in srgb, var(--section-color) 68%, var(--color-ink)); }
-.infoRow dd { margin: 0; padding-left: 20px; border-left: 1px solid color-mix(in srgb, var(--section-color) 30%, white); font-size: 16px; line-height: 1.7; overflow-wrap: anywhere; }
+.infoRow dd { margin: 0; padding-left: 20px; border-left: 1px solid color-mix(in srgb, var(--section-color) 30%, white); font-size: 16px; line-height: 1.7; overflow-wrap: anywhere; white-space: pre-wrap; }
 .section[data-tone="purple"] .infoRow svg { color: color-mix(in srgb, var(--color-ink) 80%, var(--color-purple)); }
 .source { color: color-mix(in srgb, var(--color-ink) 75%, white); }
 .actions { padding: 0 10px; margin-top: 10px; }

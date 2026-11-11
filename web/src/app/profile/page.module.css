@@ -210,6 +210,24 @@
   line-height: 1.6;
 }
 
+.saveToast {
+  position: fixed;
+  z-index: 20;
+  right: 16px;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  left: 16px;
+  width: min(100% - 32px, 640px);
+  margin: 0 auto;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: var(--color-ink);
+  color: white;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+}
+
 .submit {
   width: 100%;
   min-height: 54px;

@@ -66,7 +66,7 @@ export default function LoginPage() {
           <p className="hero-description">あなたに合う企業探しを、ここから。</p>
         </div>
 
-        <form className={styles.form} method="post" onSubmit={handleSubmit} aria-describedby="login-note">
+        <form className={styles.form} method="post" onSubmit={handleSubmit}>
           <div className={styles.field}>
             <label className="font-bold" htmlFor="email">メールアドレス</label>
             <input
@@ -114,10 +114,9 @@ export default function LoginPage() {
           </div>
 
           <div className="text-center">
-            <button className="start-button w-full" type="submit" disabled={submitting} aria-describedby="login-note">
+            <button className="start-button w-full" type="submit" disabled={submitting}>
               {submitting ? "確認中…" : "ログイン"}
             </button>
-            <p id="login-note" className="availability-note">開発用の架空アカウントでログインしてください。</p>
             {formError && <p className={styles.feedback} role="alert">{formError}</p>}
           </div>
         </form>
